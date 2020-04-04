@@ -2,7 +2,7 @@ import { LoggerOptions } from 'winston';
 import { MongoClientOptions } from 'mongodb';
 
 export interface Docs {
-  userId: string;
+  ip: string;
   reset: string;
   remaining: number;
 }

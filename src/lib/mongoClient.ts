@@ -10,8 +10,8 @@ export class MongoDB {
     this.client.connect();
   }
 
-  public async findList(userId: string) {
-    const rawData = await this.client.db('rateList').collection('record').findOne({userId});
+  public async findList(ip: string) {
+    const rawData = await this.client.db('rateList').collection('record').findOne({ip});
     return rawData;
   }
 
@@ -20,13 +20,13 @@ export class MongoDB {
   }
 
   public async updateList(
-    userId: string,
+    ip: string,
     data: { remaining: number; reset: string }
   ) {
     await this.client.db('rateList').collection('record')
       .findOneAndUpdate(
         {
-          userId,
+          ip,
         },
         {
           $set: { remaining: data.remaining, reset: data.reset }

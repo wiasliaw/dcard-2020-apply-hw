@@ -16,11 +16,7 @@ const rateLimitMiddleware: IMiddleware = async (
   ctx: Context,
   next: Next,
 ) => {
-  const { userId } = ctx.request.body;
-  if (!userId) {
-    ctx.throw(new AppError(401, 'Unauthorized'));
-  }
-  const userData: Docs = await (ctx.dbClient as MongoDB).findList(userId);
+  const userData: Docs = await (ctx.dbClient as MongoDB).findList(ctx.ip);
   if (userData) {
     let updateResetTime: string = userData.reset;
     let updateRemaining: number = userData.remaining;
@@ -38,19 +34,19 @@ const rateLimitMiddleware: IMiddleware = async (
     // set headers & update db
     ctx.set('X-RateLimit-Remaining', updateRemaining.toString());
     ctx.set('X-RateLimit-Reset', updateResetTime);
-    await (ctx.dbClient as MongoDB).updateList(userId, {
+    await (ctx.dbClient as MongoDB).updateList(ctx.ip, {
       reset: updateResetTime,
       remaining: updateRemaining,
     });
   } else {
     const resetTime = getResetTime();
+    ctx.set('X-RateLimit-Remaining', '999');
+    ctx.set('X-RateLimit-Reset', resetTime);
     await (ctx.dbClient as MongoDB).insertList({
-      userId,
+      ip: ctx.ip,
       remaining: 999,
       reset: resetTime,
     });
-    ctx.set('X-RateLimit-Remaining', '999');
-    ctx.set('X-RateLimit-Reset', resetTime);
   }
   await next();
 };
