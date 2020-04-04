@@ -1,0 +1,42 @@
+{
+  "name": "dcard-2020-apply-hw",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:wiasliaw77210/dcard-2020-apply-hw.git",
+  "author": "Wias Liaw <leewei48750@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/bin/www.ts",
+    "prestart": "yarn run build",
+    "start": "yarn run build && node dist/bin/www.js",
+    "lint": "eslint . --ext .ts",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.4",
+    "@types/koa": "^2.11.3",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-router": "^7.4.0",
+    "@types/mongodb": "^3.5.4",
+    "@types/node": "^13.9.8",
+    "@types/uuid": "^7.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "eslint": "^6.8.0",
+    "jest": "^25.2.4",
+    "ts-jest": "^25.3.0",
+    "ts-node": "^8.8.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "dayjs": "^1.8.23",
+    "dotenv": "^8.2.0",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^8.0.8",
+    "mongodb": "^3.5.5",
+    "uuid": "^7.0.3",
+    "winston": "^3.2.1"
+  }
+}
